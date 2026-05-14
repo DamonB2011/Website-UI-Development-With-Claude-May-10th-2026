@@ -1,59 +1,89 @@
-import type { Variants } from "framer-motion";
+import type { Variants, Transition } from "framer-motion";
 
-export const ease = {
-  smooth: [0.25, 0.1, 0.25, 1],
-  out: [0.0, 0.0, 0.2, 1],
-  spring: { type: "spring", stiffness: 300, damping: 30 },
-  softSpring: { type: "spring", stiffness: 180, damping: 24 },
+// ─── Core spring tokens ────────────────────────────────────────────────
+// bounce: 0 gives an ease-out-quart feel — no overshoot, no elastic
+export const spring = {
+  default:   { type: "spring", duration: 0.45, bounce: 0 } as Transition,
+  fast:      { type: "spring", duration: 0.25, bounce: 0 } as Transition,
+  slow:      { type: "spring", duration: 0.65, bounce: 0 } as Transition,
+  // Hover / tap micro-interactions
+  micro:     { type: "spring", duration: 0.18, bounce: 0 } as Transition,
+  // For continuous physics (card tilt, parallax)
+  physical:  { type: "spring", stiffness: 300, damping: 20 }  as Transition,
 } as const;
 
+// ─── Page-load enter recipe ────────────────────────────────────────────
+// initial → animate. Matches brief exactly.
+export const enterInitial = {
+  opacity: 0,
+  y: 8,
+  filter: "blur(4px)",
+} as const;
+
+export const enterAnimate = {
+  opacity: 1,
+  y: 0,
+  filter: "blur(0px)",
+} as const;
+
+// ─── Variants ─────────────────────────────────────────────────────────
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  visible: (delay = 0) => ({
+  hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: ease.out, delay },
-  }),
+    filter: "blur(0px)",
+    transition: spring.default,
+  },
 };
 
 export const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: (delay = 0) => ({
+  hidden: { opacity: 0, filter: "blur(4px)" },
+  visible: {
     opacity: 1,
-    transition: { duration: 0.5, ease: ease.smooth, delay },
-  }),
+    filter: "blur(0px)",
+    transition: spring.default,
+  },
 };
 
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: (delay = 0) => ({
+  hidden: { opacity: 0, scale: 0.94, filter: "blur(4px)" },
+  visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.55, ease: ease.out, delay },
-  }),
+    filter: "blur(0px)",
+    transition: spring.default,
+  },
 };
 
-export const slideRight: Variants = {
-  hidden: { opacity: 0, x: -24 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.55, ease: ease.out, delay },
-  }),
-};
-
+// ─── Stagger containers ────────────────────────────────────────────────
 export const staggerContainer: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
 };
 
+export const staggerFast: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0 },
+  },
+};
+
+// Each child inside staggerContainer
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: ease.out },
+    filter: "blur(0px)",
+    transition: spring.default,
   },
+};
+
+// ─── Exit (subtler than enter — smaller translate) ─────────────────────
+export const exitDown: Variants = {
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden:  { opacity: 0, y: 4, filter: "blur(2px)", transition: spring.fast },
 };

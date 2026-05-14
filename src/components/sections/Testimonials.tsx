@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { spring } from "@/lib/motion";
 
 const testimonials = [
   {
@@ -13,21 +14,21 @@ const testimonials = [
     color: "from-amber-500 to-rose-500",
   },
   {
-    quote: "30 minutes on the dot, every time. I order for the whole team on Fridays — Savour has never once let us down. The group order feature is genuinely brilliant.",
+    quote: "30 minutes on the dot, every time. I order for the whole team on Fridays and Savour has never once let us down. The group order feature is genuinely brilliant.",
     name: "James Okafor",
     title: "Creative Director, Wieden+Kennedy",
     avatar: "JO",
     color: "from-rose-500 to-amber-500",
   },
   {
-    quote: "As a chef I was sceptical about delivery. Savour's packaging and timing means my dishes actually arrive the way I designed them. That matters enormously to me.",
+    quote: "As a chef I was sceptical about delivery. Savour's packaging and timing means my dishes actually arrive the way I designed them. That matters enormously.",
     name: "Chef Amara Diallo",
     title: "Executive Chef, partner since 2023",
     avatar: "AD",
     color: "from-amber-400 to-amber-600",
   },
   {
-    quote: "The live tracking is addictive. I watch my food the whole way. But more importantly — it's always hot when it arrives. That's rare.",
+    quote: "The live tracking is addictive. I watch my food the whole way. But more importantly, it's always hot when it arrives. That's rare.",
     name: "Marcus Webb",
     title: "Tech founder, London",
     avatar: "MW",
@@ -35,7 +36,7 @@ const testimonials = [
   },
 ];
 
-const logos = ["The Guardian", "Bloomberg", "Vogue", "Time Out", "Eater", "Bon Appétit"];
+const logos = ["The Guardian", "Bloomberg", "Vogue", "Time Out", "Eater", "Bon Appetit"];
 
 export default function Testimonials() {
   const [active, setActive] = useState(0);
@@ -47,7 +48,7 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="relative py-32 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/8 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/6 to-transparent pointer-events-none" />
 
       <div className="max-w-5xl mx-auto">
         <ScrollReveal className="flex flex-wrap justify-center gap-x-10 gap-y-4 mb-20">
@@ -60,7 +61,7 @@ export default function Testimonials() {
           <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-white">
             Trusted by people who
             <br />
-            <span className="gradient-text italic">know good food</span>
+            <span className="text-amber-hi italic">know good food</span>
           </h2>
         </ScrollReveal>
 
@@ -68,11 +69,11 @@ export default function Testimonials() {
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
-              initial={{ opacity: 0, y: 24, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -16, scale: 0.97 }}
-              transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
-              className="glass rounded-2xl p-8 md:p-10 border border-white/[0.07] max-w-2xl mx-auto text-center"
+              initial={{ opacity: 0, y: 20, scale: 0.97, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -12, scale: 0.97, filter: "blur(2px)" }}
+              transition={spring.default}
+              className="card-surface rounded-2xl p-8 md:p-10 border border-white/[0.07] max-w-2xl mx-auto text-center"
             >
               <blockquote className="font-display text-lg md:text-xl text-white/70 leading-relaxed mb-7 italic font-light">
                 &ldquo;{testimonials[active].quote}&rdquo;
@@ -92,18 +93,25 @@ export default function Testimonials() {
 
         <div className="flex justify-center gap-2 mt-8">
           {testimonials.map((_, i) => (
-            <button
+            <motion.button
               key={i}
               onClick={() => setActive(i)}
-              className="relative h-1.5 rounded-full overflow-hidden transition-all duration-300"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              transition={spring.micro}
+              className="relative h-1.5 rounded-full overflow-hidden transition-all"
               style={{ width: i === active ? 24 : 8 }}
               aria-label={`Go to testimonial ${i + 1}`}
             >
               <div className="absolute inset-0 bg-white/15" />
               {i === active && (
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-rose-500" layoutId="tdot" />
+                <motion.div
+                  className="absolute inset-0 bg-amber-500"
+                  layoutId="tdot"
+                  transition={spring.default}
+                />
               )}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>

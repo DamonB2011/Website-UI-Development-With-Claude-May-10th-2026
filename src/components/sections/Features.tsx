@@ -1,60 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { staggerContainer, staggerItem } from "@/lib/motion";
+import { staggerContainer, staggerItem, spring } from "@/lib/motion";
 
-const features = [
-  {
-    icon: "📍",
-    title: "Live GPS tracking",
-    desc: "Watch your order move in real time — from the kitchen to your door. No more 'where is my food?' anxiety.",
-    accent: "border-amber-500/20",
-    color: "from-amber-500/8 to-amber-500/3",
-    demo: <TrackingDemo />,
-  },
-  {
-    icon: "👨‍🍳",
-    title: "Chef-curated menus",
-    desc: "Every dish designed by a named, vetted chef. Seasonal ingredients, restaurant plating, delivered to your table.",
-    accent: "border-rose-500/20",
-    color: "from-rose-500/8 to-rose-500/3",
-    demo: <ChefDemo />,
-  },
-  {
-    icon: "⚡",
-    title: "30-minute guarantee",
-    desc: "We don't just promise 30 minutes — we refund your delivery fee if we miss it. Every single time.",
-    accent: "border-amber-500/20",
-    color: "from-amber-500/8 to-rose-500/3",
-    demo: <TimerDemo />,
-  },
-  {
-    icon: "🌿",
-    title: "Dietary filters",
-    desc: "Vegan, gluten-free, halal, keto — filter once, and only see meals made for your lifestyle.",
-    accent: "border-green-500/20",
-    color: "from-green-500/8 to-green-500/3",
-    demo: <DietDemo />,
-  },
-  {
-    icon: "🔁",
-    title: "Smart reorders",
-    desc: "Savour learns your favourites. One tap to reorder your usual — exactly how you like it, every time.",
-    accent: "border-amber-500/20",
-    color: "from-amber-500/8 to-amber-500/3",
-    demo: <ReorderDemo />,
-  },
-  {
-    icon: "🎁",
-    title: "Group orders",
-    desc: "Everyone picks from the same kitchen. One delivery, one payment link, zero arguments about where to eat.",
-    accent: "border-rose-500/20",
-    color: "from-rose-500/8 to-rose-500/3",
-    demo: <GroupDemo />,
-  },
-];
+// ─── Bento grid — varied card sizes, no identical layout ──────────────
 
 export default function Features() {
   return (
@@ -64,103 +15,232 @@ export default function Features() {
           <p className="text-sm font-medium text-amber-400 mb-4 tracking-wider uppercase">What makes us different</p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-white mb-5">
             Built around the{" "}
-            <span className="gradient-text italic">experience</span>
+            <span className="text-amber-hi italic">experience</span>
           </h2>
           <p className="text-white/45 text-lg max-w-xl mx-auto leading-relaxed">
-            Not just delivery — the full restaurant experience, designed to
-            travel.
+            Not just delivery. The full restaurant experience, designed to travel.
           </p>
         </ScrollReveal>
 
+        {/* ── Bento grid: 12 columns, asymmetric card sizes ── */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="grid grid-cols-1 md:grid-cols-12 gap-4"
         >
-          {features.map((f) => (
-            <FeatureCard key={f.title} feature={f} />
-          ))}
+          {/* Card 1: GPS Tracking — large hero card, 7 cols */}
+          <motion.div variants={staggerItem} className="md:col-span-7">
+            <BentoCard accent="amber" className="h-full min-h-[320px]">
+              <div className="flex flex-col h-full">
+                <div className="mb-4">
+                  <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg mb-4">📍</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Live GPS tracking</h3>
+                  <p className="text-white/45 text-sm leading-relaxed max-w-sm">
+                    Watch your order move in real time, from the kitchen to your door.
+                    No more wondering where your food is.
+                  </p>
+                </div>
+                <div className="flex-1 flex items-end">
+                  <TrackingDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
+
+          {/* Card 2: Chef menus — narrow tall card, 5 cols */}
+          <motion.div variants={staggerItem} className="md:col-span-5">
+            <BentoCard accent="rose" className="h-full min-h-[320px]">
+              <div className="flex flex-col h-full">
+                <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg mb-4">👨‍🍳</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Chef-curated menus</h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-6">
+                  Every dish designed by a named, vetted chef. Seasonal ingredients,
+                  restaurant plating.
+                </p>
+                <div className="mt-auto">
+                  <ChefDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
+
+          {/* Card 3: 30-min guarantee — narrow, 4 cols */}
+          <motion.div variants={staggerItem} className="md:col-span-4">
+            <BentoCard accent="amber" className="min-h-[240px]">
+              <div className="flex flex-col h-full">
+                <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg mb-4">⚡</div>
+                <h3 className="text-lg font-semibold text-white mb-2">30-minute guarantee</h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-5">
+                  We refund your delivery fee if we miss the 30-minute window. Every single time.
+                </p>
+                <div className="mt-auto">
+                  <TimerDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
+
+          {/* Card 4: Dietary filters — medium, 4 cols */}
+          <motion.div variants={staggerItem} className="md:col-span-4">
+            <BentoCard accent="green" className="min-h-[240px]">
+              <div className="flex flex-col h-full">
+                <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg mb-4">🌿</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Dietary filters</h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-5">
+                  Vegan, gluten-free, halal, keto. Filter once and only see meals made for you.
+                </p>
+                <div className="mt-auto">
+                  <DietDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
+
+          {/* Card 5: Smart reorders — narrow, 4 cols */}
+          <motion.div variants={staggerItem} className="md:col-span-4">
+            <BentoCard accent="amber" className="min-h-[240px]">
+              <div className="flex flex-col h-full">
+                <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg mb-4">🔁</div>
+                <h3 className="text-lg font-semibold text-white mb-2">Smart reorders</h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-5">
+                  Savour learns your favourites. One tap to reorder exactly how you like it.
+                </p>
+                <div className="mt-auto flex items-center justify-center">
+                  <ReorderDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
+
+          {/* Card 6: Group orders — full-width banner card */}
+          <motion.div variants={staggerItem} className="md:col-span-12">
+            <BentoCard accent="rose" className="min-h-[180px]">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl card-surface-raised flex items-center justify-center text-lg">🎁</div>
+                    <h3 className="text-xl font-semibold text-white">Group orders</h3>
+                  </div>
+                  <p className="text-white/45 text-sm leading-relaxed max-w-xl">
+                    Everyone picks from the same kitchen. One delivery, one payment link,
+                    zero arguments about where to eat tonight.
+                  </p>
+                </div>
+                <div className="shrink-0">
+                  <GroupDemo />
+                </div>
+              </div>
+            </BentoCard>
+          </motion.div>
         </motion.div>
       </div>
     </section>
   );
 }
 
-function FeatureCard({ feature }: { feature: typeof features[0] }) {
+// ─── Shared bento card shell ───────────────────────────────────────────
+function BentoCard({
+  children,
+  accent,
+  className = "",
+}: {
+  children: React.ReactNode;
+  accent: "amber" | "rose" | "green";
+  className?: string;
+}) {
   const [hovered, setHovered] = useState(false);
+
+  const borderColor = {
+    amber: "border-amber-500/18",
+    rose:  "border-rose-500/18",
+    green: "border-green-500/18",
+  }[accent];
+
+  const glowColor = {
+    amber: "rgba(245,158,11,0.05)",
+    rose:  "rgba(251,113,133,0.05)",
+    green: "rgba(34,197,94,0.05)",
+  }[accent];
 
   return (
     <motion.div
-      variants={staggerItem}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className={`relative group glass rounded-2xl p-6 border ${feature.accent} overflow-hidden cursor-default`}
+      whileHover={{ y: -2 }}
+      transition={spring.micro}
+      className={`relative card-surface rounded-2xl p-6 border ${borderColor} overflow-hidden cursor-default ${className}`}
     >
       <motion.div
-        className={`absolute inset-0 bg-gradient-to-br ${feature.color}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
+        className="absolute inset-0 pointer-events-none"
+        animate={{ backgroundColor: hovered ? glowColor : "transparent" }}
+        transition={spring.default}
       />
-      <div className="relative z-10">
-        <div className="w-11 h-11 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center mb-4 text-xl">
-          {feature.icon}
-        </div>
-        <h3 className="font-semibold text-white text-[17px] mb-2">{feature.title}</h3>
-        <p className="text-white/45 text-sm leading-relaxed mb-5">{feature.desc}</p>
-        <div className="rounded-xl bg-black/25 border border-white/[0.05] p-4 h-24 flex items-center justify-center overflow-hidden">
-          {feature.demo}
-        </div>
+      <div className="relative z-10 h-full flex flex-col">
+        {children}
       </div>
     </motion.div>
   );
 }
 
+// ─── Feature demos ─────────────────────────────────────────────────────
 function TrackingDemo() {
   return (
-    <div className="w-full relative h-full flex items-center">
-      {/* Route line */}
-      <div className="absolute left-4 right-4 h-px bg-white/[0.08]" />
-      {/* Stops */}
-      {[{ l: "8%", label: "Kitchen" }, { l: "48%", label: "" }, { l: "88%", label: "You" }].map((s, i) => (
-        <div key={i} className="absolute flex flex-col items-center gap-1" style={{ left: s.l }}>
-          <div className={`w-2 h-2 rounded-full ${i === 2 ? "bg-green-400" : "bg-white/20"}`} />
-          {s.label && <span className="text-[9px] text-white/30 -mt-0.5">{s.label}</span>}
-        </div>
-      ))}
-      {/* Rider dot */}
-      <motion.div
-        className="absolute flex flex-col items-center gap-1"
-        animate={{ left: ["12%", "75%", "12%"] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-base">🛵</span>
-      </motion.div>
+    <div className="w-full">
+      {/* Route visualization */}
+      <div className="relative h-14 w-full flex items-center">
+        <div className="absolute left-4 right-4 h-px bg-white/[0.06]" />
+        {/* Stop markers */}
+        {[{ pos: "8%", label: "Kitchen" }, { pos: "48%", label: "" }, { pos: "88%", label: "You" }].map((s, i) => (
+          <div key={i} className="absolute flex flex-col items-center gap-1.5" style={{ left: s.pos }}>
+            <div className={`w-2.5 h-2.5 rounded-full ${i === 2 ? "bg-green-400" : "bg-white/15"}`} />
+            {s.label && <span className="text-[9px] text-white/25 whitespace-nowrap">{s.label}</span>}
+          </div>
+        ))}
+        {/* Animated rider */}
+        <motion.div
+          className="absolute"
+          animate={{ left: ["14%", "80%", "14%"] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="text-lg">🛵</div>
+        </motion.div>
+      </div>
+      {/* ETA pill */}
+      <div className="flex items-center gap-2 mt-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+        <span className="text-xs text-white/35">Arriving in <span className="text-amber-400 font-semibold">8 min</span></span>
+      </div>
     </div>
   );
 }
 
 function ChefDemo() {
-  const chefs = ["Chef Luca", "Chef Amara", "Chef Yuki"];
+  const chefs = [
+    { name: "Chef Luca", sub: "Michelin trained", init: "L" },
+    { name: "Chef Amara", sub: "Gordon Ramsay alumni", init: "A" },
+    { name: "Chef Yuki", sub: "Nobu-trained", init: "Y" },
+  ];
   const [idx, setIdx] = useState(0);
+
   return (
-    <div className="flex items-center gap-3 w-full">
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
-        {chefs[idx][5]}
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-sm font-bold text-amber-400 shrink-0">
+        {chefs[idx].init}
       </div>
       <div className="flex-1 min-w-0">
         <AnimatePresence mode="wait">
-          <motion.div key={idx}
-            initial={{ opacity: 0, x: 8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
-            transition={{ duration: 0.3 }}
-            onAnimationComplete={() => setTimeout(() => setIdx(p => (p + 1) % chefs.length), 1400)}
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, x: 10, filter: "blur(4px)" }}
+            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, x: -10, filter: "blur(2px)" }}
+            transition={spring.fast}
+            onAnimationComplete={() => setTimeout(() => setIdx((p) => (p + 1) % chefs.length), 1600)}
           >
-            <p className="text-xs font-semibold text-white/70">{chefs[idx]}</p>
-            <p className="text-[10px] text-white/30">★★★★★ Michelin trained</p>
+            <p className="text-sm font-semibold text-white/75">{chefs[idx].name}</p>
+            <p className="text-[11px] text-white/30">{chefs[idx].sub}</p>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -170,17 +250,17 @@ function ChefDemo() {
 
 function TimerDemo() {
   return (
-    <div className="flex items-center justify-center gap-4">
-      {["", "2", "8"].map((n, i) => (
-        <div key={i} className="flex flex-col items-center">
+    <div className="flex items-center gap-4 justify-center">
+      {[{ n: "00", label: "hr" }, { n: "28", label: "min" }, { n: "42", label: "sec" }].map(({ n, label }, i) => (
+        <div key={label} className="flex flex-col items-center">
           <motion.div
-            animate={i === 2 ? { scale: [1, 1.08, 1] } : {}}
+            animate={i === 2 ? { opacity: [1, 0.4, 1] } : {}}
             transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
-            className="text-2xl font-display font-semibold text-amber-400"
+            className="text-2xl font-display font-semibold text-amber-400 tabular-nums"
           >
-            {n || "0"}
+            {n}
           </motion.div>
-          <span className="text-[9px] text-white/25">{["hr", "min", "sec"][i]}</span>
+          <span className="text-[9px] text-white/25 mt-0.5">{label}</span>
         </div>
       ))}
     </div>
@@ -190,17 +270,20 @@ function TimerDemo() {
 function DietDemo() {
   const tags = ["Vegan", "GF", "Keto", "Halal"];
   const [active, setActive] = useState(0);
+
   return (
-    <div className="flex gap-1.5 flex-wrap justify-center">
+    <div className="flex gap-2 flex-wrap">
       {tags.map((t, i) => (
         <motion.button
           key={t}
           onClick={() => setActive(i)}
-          animate={{ scale: active === i ? 1 : 0.95 }}
-          className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-colors ${
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          transition={spring.micro}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
             active === i
-              ? "bg-green-500/20 text-green-300 border border-green-500/30"
-              : "bg-white/[0.04] text-white/30 border border-white/[0.07]"
+              ? "bg-green-500/15 text-green-300 border-green-500/30"
+              : "bg-white/[0.03] text-white/30 border-white/[0.07] hover:border-white/[0.14]"
           }`}
         >
           {t}
@@ -212,19 +295,37 @@ function DietDemo() {
 
 function ReorderDemo() {
   const [ordered, setOrdered] = useState(false);
+
   return (
     <motion.button
-      onClick={() => { setOrdered(true); setTimeout(() => setOrdered(false), 2000); }}
+      onClick={() => {
+        setOrdered(true);
+        setTimeout(() => setOrdered(false), 2200);
+      }}
+      whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.95 }}
-      className="flex items-center gap-2 px-4 py-2 rounded-xl border border-amber-500/25 bg-amber-500/8 text-xs font-medium text-amber-300"
+      transition={spring.micro}
+      className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-amber-500/25 bg-amber-500/8 text-sm font-medium text-amber-300"
     >
       <AnimatePresence mode="wait">
         {ordered ? (
-          <motion.span key="done" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            ✓ On its way!
+          <motion.span
+            key="done"
+            initial={{ opacity: 0, y: 5, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -4, filter: "blur(2px)" }}
+            transition={spring.fast}
+          >
+            Placed
           </motion.span>
         ) : (
-          <motion.span key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <motion.span
+            key="idle"
+            initial={{ opacity: 0, filter: "blur(4px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, filter: "blur(2px)" }}
+            transition={spring.fast}
+          >
             🔁 Reorder usual
           </motion.span>
         )}
@@ -234,23 +335,28 @@ function ReorderDemo() {
 }
 
 function GroupDemo() {
-  const avatars = ["D", "A", "M", "+2"];
+  const members = ["D", "A", "M", "J", "+2"];
+
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex -space-x-2">
-        {avatars.map((a, i) => (
+    <div className="flex items-center gap-4">
+      <div className="flex -space-x-2.5">
+        {members.map((m, i) => (
           <motion.div
-            key={a}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.08, type: "spring", stiffness: 260, damping: 20 }}
-            className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center text-[10px] font-bold text-white border border-ink-900"
+            key={m}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ ...spring.default, delay: i * 0.06 }}
+            whileInView={{ opacity: 1 }}
+            className="w-9 h-9 rounded-full card-surface-raised border border-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-300"
           >
-            {a}
+            {m}
           </motion.div>
         ))}
       </div>
-      <span className="text-[10px] text-white/40">Group order ready</span>
+      <div>
+        <p className="text-sm font-semibold text-white/70">5 people ordering</p>
+        <p className="text-xs text-white/30">1 delivery, 1 link</p>
+      </div>
     </div>
   );
 }

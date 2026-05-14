@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { spring } from "@/lib/motion";
 
 const stats = [
   { value: 2400000, suffix: "+", label: "Meals delivered", prefix: "" },
@@ -52,12 +53,12 @@ export default function Stats() {
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0, 0, 0.2, 1] }}
+              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+              animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+              transition={{ ...spring.default, delay: i * 0.09 }}
               className="text-center"
             >
-              <div className="text-3xl md:text-4xl font-display font-semibold gradient-text mb-1.5">
+              <div className="text-3xl md:text-4xl font-display font-semibold text-amber-hi mb-1.5">
                 <AnimatedNumber {...stat} inView={inView} />
               </div>
               <p className="text-sm text-white/35">{stat.label}</p>

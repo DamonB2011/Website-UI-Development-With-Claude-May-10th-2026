@@ -2,18 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&display=swap");
 
 :root {
-  --font-inter: "Inter", system-ui, sans-serif;
+  --font-dm:       "DM Sans", system-ui, sans-serif;
   --font-fraunces: "Fraunces", Georgia, serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -24,60 +20,62 @@ html {
 body {
   background: #0f0d0a;
   color: #f5f0e8;
-  font-family: var(--font-inter);
+  font-family: var(--font-dm);
   overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(217, 119, 6, 0.35);
+  background: rgba(217, 119, 6, 0.4);
   color: #fff;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #0f0d0a; }
-::-webkit-scrollbar-thumb { background: #2a2318; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #3d3428; }
+::-webkit-scrollbar-thumb { background: #2e2212; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3018; }
 
-/* Glass card */
-.glass {
-  background: rgba(245, 240, 232, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 240, 232, 0.08);
+/* ─── Solid colour text utilities (NO gradient-clip) ─────────────────── */
+.text-saffron  { color: #f59e0b; }
+.text-amber-hi { color: #fbbf24; }
+.text-rose-hi  { color: #fb7185; }
+.text-cream    { color: #fef3c7; }
+
+/* ─── Card surface — solid dark amber-tinted backgrounds ─────────────── */
+.card-surface {
+  background: #1a1510;
+  border: 1px solid rgba(245, 158, 11, 0.12);
 }
 
-.glass-warm {
-  background: rgba(217, 119, 6, 0.06);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(217, 119, 6, 0.15);
+.card-surface-raised {
+  background: #211a12;
+  border: 1px solid rgba(245, 158, 11, 0.18);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ─── Ambient lighting mesh background ───────────────────────────────── */
+.bg-mesh {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 15%, rgba(217,119,6,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 5%,  rgba(239,68,68,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 10% 75%, rgba(180,83,9,0.08)  0%, transparent 55%);
 }
 
-.gradient-text-cream {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 60%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* ─── Typography ─────────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-fraunces); }
 
-/* Serif display util */
-.font-display {
-  font-family: var(--font-fraunces);
-}
-
-/* Glow */
+/* ─── Glow utilities (box-shadow only, never text gradient) ──────────── */
 .glow-amber {
-  box-shadow: 0 0 40px rgba(217, 119, 6, 0.2), 0 0 80px rgba(217, 119, 6, 0.08);
+  box-shadow: 0 0 48px rgba(217,119,6,0.22), 0 0 96px rgba(217,119,6,0.09);
 }
-.glow-red {
-  box-shadow: 0 0 40px rgba(239, 68, 68, 0.15), 0 0 80px rgba(239, 68, 68, 0.06);
+.glow-rose {
+  box-shadow: 0 0 40px rgba(239,68,68,0.16), 0 0 80px rgba(239,68,68,0.07);
+}
+
+/* ─── Reduced motion — honour the user preference ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

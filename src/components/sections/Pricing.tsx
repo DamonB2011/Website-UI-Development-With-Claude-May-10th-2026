@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlowButton } from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import { spring, staggerContainer, staggerItem } from "@/lib/motion";
 
 const plans = [
   {
@@ -45,7 +46,7 @@ const plans = [
     features: [
       "Everything in Savour Pass",
       "Up to 50 team members",
-      "Monthly billing & invoices",
+      "Monthly billing and invoices",
       "Dedicated account manager",
       "Custom dietary policies",
     ],
@@ -64,49 +65,69 @@ export default function Pricing() {
           <p className="text-sm font-medium text-amber-400 mb-4 tracking-wider uppercase">Pricing</p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-white mb-4">
             Eat well for{" "}
-            <span className="gradient-text italic">less</span>
+            <span className="text-saffron italic">less</span>
           </h2>
           <p className="text-white/40 text-lg max-w-md mx-auto mb-8">
             One flat pass. Unlimited deliveries. Cancel anytime.
           </p>
 
-          <div className="inline-flex items-center gap-1 glass rounded-xl p-1 border border-white/[0.07]">
-            <button onClick={() => setYearly(false)}
-              className={cn("px-4 py-1.5 rounded-lg text-sm transition-all duration-200",
-                !yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60")}>
+          {/* Toggle */}
+          <div className="inline-flex items-center gap-1 card-surface rounded-xl p-1 border border-white/[0.07]">
+            <motion.button
+              onClick={() => setYearly(false)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring.micro}
+              className={cn(
+                "px-4 py-1.5 rounded-lg text-sm transition-colors",
+                !yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60"
+              )}
+            >
               Monthly
-            </button>
-            <button onClick={() => setYearly(true)}
-              className={cn("px-4 py-1.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-2",
-                yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60")}>
+            </motion.button>
+            <motion.button
+              onClick={() => setYearly(true)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring.micro}
+              className={cn(
+                "px-4 py-1.5 rounded-lg text-sm transition-colors flex items-center gap-2",
+                yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60"
+              )}
+            >
               Yearly
               <span className="text-[10px] font-semibold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded-full">Save 22%</span>
-            </button>
+            </motion.button>
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {plans.map((plan, i) => (
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid md:grid-cols-3 gap-5"
+        >
+          {plans.map((plan) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0, 0, 0.2, 1] }}
+              variants={staggerItem}
               className={cn(
-                "relative glass rounded-2xl p-6 border flex flex-col",
-                plan.highlight ? "border-amber-500/30 shadow-xl shadow-amber-900/20" : "border-white/[0.07]"
+                "relative card-surface rounded-2xl p-6 border flex flex-col",
+                plan.highlight
+                  ? "border-amber-500/30 shadow-xl shadow-amber-900/20"
+                  : "border-white/[0.07]"
               )}
             >
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-lg">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-ink-950 shadow-lg">
                     {(plan as { badge?: string }).badge}
                   </span>
                 </div>
               )}
               {plan.highlight && (
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-amber-500/6 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-amber-500/4 pointer-events-none" />
               )}
 
               <div className="mb-5">
@@ -115,10 +136,10 @@ export default function Pricing() {
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={yearly ? "y" : "m"}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
+                      initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -8, filter: "blur(2px)" }}
+                      transition={spring.fast}
                       className="text-4xl font-display font-semibold text-white"
                     >
                       £{yearly ? plan.yearly : plan.monthly}
@@ -143,13 +164,19 @@ export default function Pricing() {
               {plan.highlight ? (
                 <GlowButton href="#" className="w-full justify-center py-2.5">{plan.cta}</GlowButton>
               ) : (
-                <a href="#" className="block text-center py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white border border-white/[0.09] hover:border-white/[0.16] hover:bg-white/[0.03] transition-all duration-200">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={spring.micro}
+                  className="block text-center py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white border border-white/[0.09] hover:border-white/[0.16] hover:bg-white/[0.03] transition-colors"
+                >
                   {plan.cta}
-                </a>
+                </motion.a>
               )}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
