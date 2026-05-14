@@ -24,6 +24,19 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── Subtle grain texture over entire page ──────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
 ::selection {
   background: rgba(217, 119, 6, 0.4);
   color: #fff;
@@ -69,6 +82,21 @@ body {
 }
 .glow-rose {
   box-shadow: 0 0 40px rgba(239,68,68,0.16), 0 0 80px rgba(239,68,68,0.07);
+}
+
+/* ─── Food marquee infinite scroll ──────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 /* ─── Reduced motion — honour the user preference ───────────────────── */

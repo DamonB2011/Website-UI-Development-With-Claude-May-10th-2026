@@ -112,6 +112,8 @@ export default function Pricing() {
             <motion.div
               key={plan.name}
               variants={staggerItem}
+              whileHover={{ y: -4, scale: 1.01 }}
+              transition={spring.default}
               className={cn(
                 "relative card-surface rounded-2xl p-6 border flex flex-col",
                 plan.highlight

@@ -27,6 +27,11 @@ export default function Hero() {
 
       {/* ── Parallax background ── */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 pointer-events-none bg-mesh" aria-hidden>
+        {/* Radial gradient behind the left text column */}
+        <div
+          className="absolute top-0 left-0 w-[55%] h-full pointer-events-none"
+          style={{ background: "radial-gradient(ellipse 80% 70% at 30% 50%, rgba(180,120,40,0.08) 0%, transparent 70%)" }}
+        />
         <div className="absolute top-1/3 left-1/4 w-[700px] h-[700px] rounded-full bg-amber-600/8 blur-[130px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-rose-600/6 blur-[100px]" />
         <div
