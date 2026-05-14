@@ -69,4 +69,4 @@ Motion works best when it has constraints. Using spring physics exclusively forc
 
 ## About
 
-Built by Youbo (Damon) Bao, a student developer at Ridley College interested in mechanical engineering, aerospace, and building things at the intersection of physics and software.
+Built by Youbo (Damon) Bao, a student developer at Ridley College interested in mechanical engineering, aerospace, and building things at the intersection of physics and software. This is my first project that was business oriented, I plan on making things close to this in the future.
