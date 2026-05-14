@@ -13,33 +13,33 @@
 
 ## What It Is
 
-Savour is a concept landing page for a premium food delivery app. The project was a UI exercise focused on production-grade motion design, editorial typography, and a cohesive premium brand identity — built entirely with Next.js 14, Framer Motion, and Tailwind CSS 4.
+Savour is a concept landing page for a premium food delivery app. The project was a UI exercise focused on production-grade motion design, editorial typography, and a cohesive brand identity. Built with Next.js 14, Framer Motion, and Tailwind CSS 4. Deployed on Vercel.
 
 ---
 
 ## Design System
 
 **Typography**
-Fraunces serif for all display headings with italic weight contrast. High scale ratio between heading sizes for a strong editorial hierarchy.
+Fraunces serif for all display headings, with italic weight contrast for editorial feel. Heading sizes follow a high scale ratio so the hierarchy reads immediately.
 
 **Color**
-Deep charcoal background with amber/saffron as the dominant accent. Rose as a secondary accent used sparingly. Every neutral is tinted warm rather than defaulting to pure black.
+Deep charcoal background. Amber and saffron carry the dominant accent weight. Rose appears sparingly as a secondary accent. No pure black anywhere; every neutral tilts warm.
 
 **Motion**
-Spring physics throughout — no linear easing. Scroll-triggered reveals using useInView with staggered children. Every interactive element has whileHover and whileTap states. Enter animations use blur+translate for a polished feel.
+Spring physics throughout. No linear easing. Scroll-triggered reveals use useInView with staggered children. Every interactive element has whileHover and whileTap states. Enter animations combine blur and translate for a polished feel.
 
 ---
 
 ## Sections
 
-- **Hero** — Headline with floating order card and chef attribution
-- **Food Marquee** — Infinite scrolling strip of food photography
-- **Stats** — Asymmetric pull quote layout replacing the standard metric grid
-- **Features** — Magazine-style bento layout with varied card sizes
-- **How It Works** — Three-step flow with food photography
-- **Testimonials** — Carousel with press mentions
-- **Pricing** — Three-tier with monthly/yearly toggle
-- **CTA** — Promo code section with dual action
+- Hero: headline with floating order card and chef attribution
+- Food Marquee: infinite scrolling strip of food photography
+- Stats: asymmetric pull quote layout, no standard metric grid
+- Features: magazine-style bento layout with varied card sizes
+- How It Works: three-step flow with food photography
+- Testimonials: carousel with press mentions
+- Pricing: three-tier with monthly and yearly toggle
+- CTA: promo code section with dual action
 
 ---
 
@@ -50,30 +50,20 @@ Spring physics throughout — no linear easing. Scroll-triggered reveals using u
 | Framework | Next.js 14, TypeScript |
 | Styling | Tailwind CSS 4 |
 | Animation | Framer Motion |
-| Fonts | Fraunces (serif), system sans |
+| Fonts | Fraunces serif |
 | Deployment | Vercel |
 
 ---
 
-## Running Locally
+## Deployment
 
-```bash
-git clone https://github.com/DamonB2011/Website-UI-Development-With-Claude-May-10th-2026
-
-cd Website-UI-Development-With-Claude-May-10th-2026
-
-npm install
-
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view it locally.
+The site is deployed on Vercel and updates automatically on every push to main. To deploy your own version, fork the repo, connect it to Vercel, set the framework preset to Next.js, and push.
 
 ---
 
 ## What I Learned
 
-Building this pushed me to think about motion as a design material rather than decoration. The constraint of using spring physics exclusively — no linear easing — forces every animation to feel physically grounded. Getting the stagger timing right across sections and making sure every conditional render had proper AnimatePresence exit states required a lot of iteration. The magazine-style feature layout was the hardest part to get right: breaking out of identical card grids while keeping the layout coherent at different screen sizes.
+Motion works best when it has constraints. Using spring physics exclusively forces every animation to feel physically grounded rather than arbitrary. Getting the stagger timing right across sections took iteration. The magazine-style feature layout was the hardest part: breaking out of identical card grids while keeping things coherent at different screen sizes took more passes than expected.
 
 ---
 
