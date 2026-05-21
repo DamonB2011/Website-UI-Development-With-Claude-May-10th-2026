@@ -10,42 +10,45 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          950: "#06060a",
-          900: "#0d0d14",
-          800: "#16162a",
-          700: "#1e1e36",
+          950: "#0f0d0a",
+          900: "#161209",
+          800: "#1a1510",
+          700: "#211a12",
+          600: "#2e2212",
         },
-        violet: {
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
+        amber: {
+          300: "#fcd34d",
+          400: "#fbbf24",
+          500: "#f59e0b",
+          600: "#d97706",
+          700: "#b45309",
+          800: "#92400e",
         },
-        cyan: {
-          400: "#22d3ee",
-          500: "#06b6d4",
+        rose: {
+          300: "#fda4af",
+          400: "#fb7185",
+          500: "#f43f5e",
+          600: "#e11d48",
         },
-        surface: "rgba(255,255,255,0.04)",
-        border: "rgba(255,255,255,0.08)",
+        cream: {
+          50:  "#fffbf0",
+          100: "#fef3c7",
+          200: "#fde68a",
+        },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        display: ["var(--font-cal)", "var(--font-inter)", "sans-serif"],
+        sans:    ["var(--font-dm)", "system-ui", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-mesh":
-          "radial-gradient(at 40% 20%, hsla(270,70%,50%,0.15) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,0.1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(270,60%,45%,0.1) 0px, transparent 50%)",
+      fontSize: {
+        "display-xl": ["clamp(3rem, 7vw, 5.5rem)", { lineHeight: "1.0", letterSpacing: "-0.02em" }],
+        "display-lg": ["clamp(2.25rem, 5vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        "display-md": ["clamp(1.75rem, 3.5vw, 2.5rem)", { lineHeight: "1.1", letterSpacing: "-0.015em" }],
       },
-      animation: {
-        "fade-in": "fadeIn 0.6s ease forwards",
-        "spin-slow": "spin 8s linear infinite",
-      },
-      keyframes: {
-        fadeIn: {
-          from: { opacity: "0", transform: "translateY(12px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
+      boxShadow: {
+        "dish":     "0 32px 64px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5)",
+        "dish-sm":  "0 16px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4)",
+        "amber-glow": "0 0 48px rgba(217,119,6,0.22), 0 0 96px rgba(217,119,6,0.09)",
       },
     },
   },

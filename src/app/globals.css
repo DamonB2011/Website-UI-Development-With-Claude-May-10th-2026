@@ -2,17 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,600&display=swap");
 
 :root {
-  --font-inter: "Inter", system-ui, sans-serif;
+  --font-dm:       "DM Sans", system-ui, sans-serif;
+  --font-fraunces: "Fraunces", Georgia, serif;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -21,60 +18,92 @@ html {
 }
 
 body {
-  background: #06060a;
-  color: #f8f8ff;
-  font-family: var(--font-inter);
+  background: #0f0d0a;
+  color: #f5f0e8;
+  font-family: var(--font-dm);
   overflow-x: hidden;
 }
 
+/* ─── Subtle grain texture over entire page ──────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
 ::selection {
-  background: rgba(124, 58, 237, 0.35);
+  background: rgba(217, 119, 6, 0.4);
   color: #fff;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0d0d14; }
-::-webkit-scrollbar-thumb { background: #2a2a40; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3a55; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0f0d0a; }
+::-webkit-scrollbar-thumb { background: #2e2212; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3018; }
 
-/* Glass card utility */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* ─── Solid colour text utilities (NO gradient-clip) ─────────────────── */
+.text-saffron  { color: #f59e0b; }
+.text-amber-hi { color: #fbbf24; }
+.text-rose-hi  { color: #fb7185; }
+.text-cream    { color: #fef3c7; }
+
+/* ─── Card surface — solid dark amber-tinted backgrounds ─────────────── */
+.card-surface {
+  background: #1a1510;
+  border: 1px solid rgba(245, 158, 11, 0.12);
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.card-surface-raised {
+  background: #211a12;
+  border: 1px solid rgba(245, 158, 11, 0.18);
 }
 
-.gradient-text-warm {
-  background: linear-gradient(135deg, #f9a8d4 0%, #a78bfa 50%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ─── Ambient lighting mesh background ───────────────────────────────── */
+.bg-mesh {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 15%, rgba(217,119,6,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 5%,  rgba(239,68,68,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 10% 75%, rgba(180,83,9,0.08)  0%, transparent 55%);
 }
 
-/* Glow effects */
-.glow-violet {
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.25), 0 0 80px rgba(124, 58, 237, 0.1);
+/* ─── Typography ─────────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-fraunces); }
+
+/* ─── Glow utilities (box-shadow only, never text gradient) ──────────── */
+.glow-amber {
+  box-shadow: 0 0 48px rgba(217,119,6,0.22), 0 0 96px rgba(217,119,6,0.09);
 }
-.glow-cyan {
-  box-shadow: 0 0 40px rgba(6, 182, 212, 0.2), 0 0 80px rgba(6, 182, 212, 0.08);
+.glow-rose {
+  box-shadow: 0 0 40px rgba(239,68,68,0.16), 0 0 80px rgba(239,68,68,0.07);
 }
 
-/* Noise texture overlay */
-.noise::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
+/* ─── Food marquee infinite scroll ──────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Reduced motion — honour the user preference ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

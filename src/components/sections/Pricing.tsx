@@ -5,51 +5,52 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlowButton } from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import { spring, staggerContainer, staggerItem } from "@/lib/motion";
 
 const plans = [
   {
-    name: "Free",
+    name: "Pay as you go",
     monthly: 0,
     yearly: 0,
-    desc: "Perfect for indie designers & side projects.",
+    desc: "No commitment. Order when you want.",
     features: [
-      "3 projects",
-      "20 animated components",
-      "Community token library",
-      "Framer Motion export",
+      "£2.99 delivery per order",
+      "Access to all chefs",
+      "Live GPS tracking",
+      "Group orders",
     ],
-    cta: "Get started free",
+    cta: "Start ordering",
     highlight: false,
   },
   {
-    name: "Pro",
-    monthly: 29,
-    yearly: 19,
-    desc: "For professional designers who ship.",
+    name: "Savour Pass",
+    monthly: 9,
+    yearly: 7,
+    desc: "For people who eat well, often.",
     features: [
-      "Unlimited projects",
-      "Full component library (80+)",
-      "AI choreographer",
-      "All export formats",
-      "Priority support",
+      "Free unlimited delivery",
+      "Priority kitchen access",
+      "Early access to new chefs",
+      "10% off every order",
+      "24/7 concierge support",
     ],
-    cta: "Start Pro trial",
+    cta: "Try free for 30 days",
     highlight: true,
     badge: "Most popular",
   },
   {
-    name: "Team",
-    monthly: 79,
-    yearly: 59,
-    desc: "For design teams that move fast together.",
+    name: "Corporate",
+    monthly: 49,
+    yearly: 39,
+    desc: "Feed your team, every day.",
     features: [
-      "Everything in Pro",
-      "Real-time collaboration",
-      "Shared token library",
-      "Design system versioning",
-      "SSO & audit logs",
+      "Everything in Savour Pass",
+      "Up to 50 team members",
+      "Monthly billing and invoices",
+      "Dedicated account manager",
+      "Custom dietary policies",
     ],
-    cta: "Start Team trial",
+    cta: "Talk to us",
     highlight: false,
   },
 ];
@@ -61,91 +62,100 @@ export default function Pricing() {
     <section id="pricing" className="relative py-32 px-6">
       <div className="max-w-5xl mx-auto">
         <ScrollReveal className="text-center mb-12">
-          <p className="text-sm font-medium text-violet-400 mb-4 tracking-wider uppercase">Pricing</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-            Simple,{" "}
-            <span className="gradient-text">honest pricing</span>
+          <p className="text-sm font-medium text-amber-400 mb-4 tracking-wider uppercase">Pricing</p>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-white mb-4">
+            Eat well for{" "}
+            <span className="text-saffron italic">less</span>
           </h2>
-          <p className="text-white/45 text-lg max-w-lg mx-auto mb-8">
-            Start free, scale as you grow. No seat fees, no feature paywalls.
+          <p className="text-white/40 text-lg max-w-md mx-auto mb-8">
+            One flat pass. Unlimited deliveries. Cancel anytime.
           </p>
 
           {/* Toggle */}
-          <div className="inline-flex items-center gap-3 glass rounded-xl p-1 border border-white/[0.08]">
-            <button
+          <div className="inline-flex items-center gap-1 card-surface rounded-xl p-1 border border-white/[0.07]">
+            <motion.button
               onClick={() => setYearly(false)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring.micro}
               className={cn(
-                "px-4 py-1.5 rounded-lg text-sm transition-all duration-200",
-                !yearly ? "bg-white/10 text-white font-medium" : "text-white/40 hover:text-white/70"
+                "px-4 py-1.5 rounded-lg text-sm transition-colors",
+                !yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60"
               )}
             >
               Monthly
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => setYearly(true)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring.micro}
               className={cn(
-                "px-4 py-1.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-2",
-                yearly ? "bg-white/10 text-white font-medium" : "text-white/40 hover:text-white/70"
+                "px-4 py-1.5 rounded-lg text-sm transition-colors flex items-center gap-2",
+                yearly ? "bg-white/10 text-white font-medium" : "text-white/35 hover:text-white/60"
               )}
             >
               Yearly
-              <span className="text-[10px] font-semibold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded-full">
-                -35%
-              </span>
-            </button>
+              <span className="text-[10px] font-semibold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded-full">Save 22%</span>
+            </motion.button>
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {plans.map((plan, i) => (
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          className="grid md:grid-cols-3 gap-5"
+        >
+          {plans.map((plan) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0, 0, 0.2, 1] }}
+              variants={staggerItem}
+              whileHover={{ y: -4, scale: 1.01 }}
+              transition={spring.default}
               className={cn(
-                "relative glass rounded-2xl p-6 border flex flex-col",
+                "relative card-surface rounded-2xl p-6 border flex flex-col",
                 plan.highlight
-                  ? "border-violet-500/40 shadow-xl shadow-violet-900/30"
-                  : "border-white/[0.08]"
+                  ? "border-amber-500/30 shadow-xl shadow-amber-900/20"
+                  : "border-white/[0.07]"
               )}
             >
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-violet-600 to-cyan-600 text-white shadow-lg">
-                    {plan.badge}
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-ink-950 shadow-lg">
+                    {(plan as { badge?: string }).badge}
                   </span>
                 </div>
               )}
               {plan.highlight && (
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-violet-600/8 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-amber-500/4 pointer-events-none" />
               )}
 
               <div className="mb-5">
-                <p className="text-sm font-medium text-white/50 mb-1">{plan.name}</p>
+                <p className="text-sm font-medium text-white/45 mb-1">{plan.name}</p>
                 <div className="flex items-end gap-1 mb-1.5">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={yearly ? "y" : "m"}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
-                      className="text-4xl font-bold text-white"
+                      initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -8, filter: "blur(2px)" }}
+                      transition={spring.fast}
+                      className="text-4xl font-display font-semibold text-white"
                     >
-                      ${yearly ? plan.yearly : plan.monthly}
+                      £{yearly ? plan.yearly : plan.monthly}
                     </motion.span>
                   </AnimatePresence>
-                  <span className="text-sm text-white/30 mb-1.5">/mo</span>
+                  <span className="text-sm text-white/25 mb-1.5">/mo</span>
                 </div>
-                <p className="text-sm text-white/40">{plan.desc}</p>
+                <p className="text-sm text-white/35">{plan.desc}</p>
               </div>
 
               <ul className="space-y-2.5 mb-7 flex-1">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm text-white/60">
-                    <svg className="w-4 h-4 mt-0.5 text-violet-400 flex-shrink-0" viewBox="0 0 16 16" fill="none">
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-white/55">
+                    <svg className="w-4 h-4 mt-0.5 text-amber-500 flex-shrink-0" viewBox="0 0 16 16" fill="none">
                       <path d="M3 8L6.5 11.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {f}
@@ -154,20 +164,21 @@ export default function Pricing() {
               </ul>
 
               {plan.highlight ? (
-                <GlowButton href="#" className="w-full justify-center py-2.5">
-                  {plan.cta}
-                </GlowButton>
+                <GlowButton href="#" className="w-full justify-center py-2.5">{plan.cta}</GlowButton>
               ) : (
-                <a
+                <motion.a
                   href="#"
-                  className="block text-center py-2.5 rounded-xl text-sm font-medium text-white/70 hover:text-white border border-white/[0.1] hover:border-white/20 hover:bg-white/[0.04] transition-all duration-200"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={spring.micro}
+                  className="block text-center py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white border border-white/[0.09] hover:border-white/[0.16] hover:bg-white/[0.03] transition-colors"
                 >
                   {plan.cta}
-                </a>
+                </motion.a>
               )}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
