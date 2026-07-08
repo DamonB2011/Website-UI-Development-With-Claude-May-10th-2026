@@ -10,43 +10,45 @@
 **Live site: [savour.vercel.app](https://website-ui-development-with-claude-may-10th-2026-omz3w8hdv.vercel.app)**
 
 ---
+## What it is
 
-## What It Is
-
-Savour is a concept landing page for a premium food delivery app. The project was a UI exercise focused on production-grade motion design, editorial typography, and a cohesive brand identity. Built with Next.js 14, Framer Motion, and Tailwind CSS 4. Deployed on Vercel.
+Savour is a concept landing page for a premium food delivery app. Project focused on production-grade motion, editorial type, and a cohesive brand. It is built with Next.js 14, Framer Motion, and Tailwind CSS 4.
 
 ---
 
-## Design System
+## Design system
 
-**Typography**
-Fraunces serif for all display headings, with italic weight contrast for editorial feel. Heading sizes follow a high scale ratio so the hierarchy reads immediately.
+### Typography
 
-**Color**
-Deep charcoal background. Amber and saffron carry the dominant accent weight. Rose appears sparingly as a secondary accent. No pure black anywhere; every neutral tilts warm.
+Fraunces serif for all display headlines. Secondary use of italics for editorial feel. High scale ratio to allow easy reading of information.
 
-**Motion**
-Spring physics throughout. No linear easing. Scroll-triggered reveals use useInView with staggered children. Every interactive element has whileHover and whileTap states. Enter animations combine blur and translate for a polished feel.
+### Color
+
+Deep charcoal backgorund, with amber and saffron as major accent tones. Rose for a minor accent. No pure black-only warm-ish neutrals.
+
+### Motion
+
+Everything utilizes spring physics; no linear easing. UseInView hook and stagger animation for section content on scroll. All interaction elements have both whileHover and whileTap states. Entry animations combine blurs and translations.
 
 ---
 
 ## Sections
 
-- Hero: headline with floating order card and chef attribution
-- Food Marquee: infinite scrolling strip of food photography
-- Stats: asymmetric pull quote layout, no standard metric grid
-- Features: magazine-style bento layout with varied card sizes
-- How It Works: three-step flow with food photography
-- Testimonials: carousel with press mentions
-- Pricing: three-tier with monthly and yearly toggle
-- CTA: promo code section with dual action
+- Hero: Heading with floating order card and chef attributions.
+- Food Marquee: Continuous scrolling loop of food photos.
+- Stats: Layout is slightly off; no typical metric system grid.
+- Features: Magazine-style bento layout with varying card sizes.
+- How It Works: Three steps illustrating process with food photos.
+- Testimonials: Scrollable with mentions from media outlets.
+- Pricing: Tiered pricing, switchable between monthly and annual options.
+- CTA: Promo code section with double action button.
 
 ---
 
 ## Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+| :-------- | :------------------ |
 | Framework | Next.js 14, TypeScript |
 | Styling | Tailwind CSS 4 |
 | Animation | Framer Motion |
@@ -57,16 +59,16 @@ Spring physics throughout. No linear easing. Scroll-triggered reveals use useInV
 
 ## Deployment
 
-The site is deployed on Vercel and updates automatically on every push to main. To deploy your own version, fork the repo, connect it to Vercel, set the framework preset to Next.js, and push.
+Deploy on Vercel to have the site automatically updated every push. Fork this repo, connect with Vercel, use Next.js as the framework preset and then push.
 
 ---
 
-## What I Learned
+## What I learned
 
-Motion works best when it has constraints. Using spring physics exclusively forces every animation to feel physically grounded rather than arbitrary. Getting the stagger timing right across sections took iteration. The magazine-style feature layout was the hardest part: breaking out of identical card grids while keeping things coherent at different screen sizes took more passes than expected.
+When applied correctly, motion design's impact is at its greatest when applied in constraints. Every movement feels natural when relying solely on spring physics rather than arbitrary easing curves. I had a number of difficulties with optimizing the staggered timing across sections, which took more passes than anticipated to achieve correctly. The hardest task was breaking away from the cookie-cutter feature card grid for the magazine-style arrangement, which was quite difficult to balance with the varying screen sizes and coherence of design.
 
 ---
 
 ## About
 
-Built by Youbo (Damon) Bao, a student developer at Ridley College interested in mechanical engineering, aerospace, and building things at the intersection of physics and software. This is my first project that was business oriented, I plan on making things close to this in the future.
+Damon (Youbo) Bao is a student at Ridley College interested in engineering of all sorts (mechanical, aerospace), and in building things where physics and software meet. This is my first time attempting a more commercially-driven design, and I can envision myself building more of these types of projects in the future.
